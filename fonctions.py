@@ -126,6 +126,33 @@ def decrypt(message):
     q_0 = q[:(len(q) - (l_1 + 1))]
     return diveu(q_0, q_1)[0]
 
+def sont_egale(L,M): # test l'égalité de deux listes
+    if len(M) != len(L):
+        return False
+    else:
+        for i in range(len(L)):
+             if L[i] != M[i]:
+                 return False
+    return True
+
+def encrypt_naif(L):
+    return L*(2*nombreerreur + 1) # principe des tiroirs
+
+def decrypt_naif(L):
+    n = len(L)
+    D = []
+    c = [1]*(2*nombreerreur+1)
+    for i in range(2*nombreerreur+1):
+        D.append(L[k*i:k*(i+1)])
+    for i in range(len(D)-2):
+        for j in range(i+1, len(D)-1):
+            if j<len(D) and sont_egale(D[i],D[j]):
+                D.pop(j)
+                c[i]+=c.pop(j)
+    imax = c.index(max(c))
+    return D[imax]
+
+
 def erreur(L):
     for i in range(nombreerreur):
         position=randint(0,len(L)-1)
