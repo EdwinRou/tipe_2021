@@ -147,7 +147,6 @@ def decrypt(message):
         for k in range(l_1 + 1):
             ligne.append(F.Multiply(message[indice-1], puissance(X[indice], k)))
         m.SetRow(indice-1, ligne)
-
     u = m.LUP()[1] # décomposition en matrices triangulaires pour extraire un élément non trivial du noyau
 
     """
@@ -165,10 +164,11 @@ def decrypt(message):
         else:
             a = F.Divide(a, u[taille - i - 1, taille - i - 1])
             q = [a] + q
-
     q_1 = q[l_0 + 1:] # définition de Q1
     q_0 = q[:(len(q) - (l_1 + 1))] # définition de Q0
+    return q_0, q_1
     return diveu(q_0, q_1)[0] # le message initialement envoyé
+
 
 def encrypt_naif(L):
     return L*3 # principe des tiroirs
