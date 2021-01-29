@@ -2,6 +2,8 @@ from fonctions import *
 import matplotlib.image as img
 import matplotlib.pyplot as plt
 import numpy as np
+import time
+from tqdm import tqdm
 
 #im = img.imread('Oeil.jpg')
 im = img.imread('picasso.jpg')
@@ -38,7 +40,7 @@ def cut(L,q=9): #décompose L en sous listes de taille q
     n =len(L)
     S = []
     for k in range(n//q):
-        S.append(L[k:k+q])
+        S.append(L[k*q:(k+1)*q])
     S.append(L[q*(n//q):]+[0]*(q-(n%q)))
     return S
 
@@ -50,30 +52,34 @@ def reverse_hexa(L):
     while len(S)>1:
         a=S.pop(0)
         b=S.pop(0)
-        Q.append(b*16+a)
+        Q.append(a*16+b)
     return Q
 
 
-def convert_l_t(L,n=256,p=256):
-    S = L[:]
-    if len(S)%3 != 0:
-        raise ValueError
-    else:
-        return np.array(cut(S,3)).reshape(n,p)
+def convert_l_t(R, G, B,n=256,p=256):
+    R_p, G_p, B_p = R[:], G[:], B[:]
+    image = []
+    for j in range(p):
+        for i in range(n):
+            image.append([R.pop(0),G.pop(0), B.pop(0)])
+    image.reshape(n,p)
+    return image
 
 
 A = convert(im)
-print(A[0][:10])
+print("Les 9 premiers elements de la composante Rouge (hexa) : \n", A[0][:9])
 B = cut(A[0])
-print('nb d\'envoi pour R :', len(B))
+print('nombre d\'envoi pour la composante Rouge :\n', len(B))
 C = [encrypt(i) for i in B]
-D = [decrypt(i) for i in C]
+print("Premier élément encrypté : \n", C[0])
+D = [decrypt(i) for i in tqdm(C)]
+print("Premier élément décrypté :\n", D[0])
 D=liste_pleine(D)
 R = reverse_hexa(D)
-print(len(R))
-'''E = liste_pleine(D)
-F = reverse_hexa(E)
-G = convert_l_t(F)
+print(R[:9])
+print("nombre d\'éléments reçu :\n ",len(R))
+print(R[-9:])
+#G = convert_l_t(R,R,R)
 #plt.imshow(G)
-plt.show()
-'''
+#plt.show()
+
