@@ -63,16 +63,14 @@ def convert_l_t(L,n=256,p=256):
 
 
 A = convert(im)
-print(len(A[0]))
-print('nb d\'envoi pour R :', len(cut(A[0])))
-
+print(A[0][:10])
 B = cut(A[0])
+print('nb d\'envoi pour R :', len(B))
 C = [encrypt(i) for i in B]
 D = [decrypt(i) for i in C]
 D=liste_pleine(D)
 R = reverse_hexa(D)
 print(len(R))
-print(len(D))
 '''E = liste_pleine(D)
 F = reverse_hexa(E)
 G = convert_l_t(F)
