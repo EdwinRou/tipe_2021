@@ -6,7 +6,7 @@ import time
 from tqdm import tqdm
 
 #im = img.imread('Oeil.jpg')
-im = img.imread('picasso.jpg')
+im = img.imread('image.jpg')
 
 def convert(tab): #retourne une liste dimension, tab
     R,G,B = [],[],[]
@@ -56,7 +56,7 @@ def reverse_hexa(L):
     return Q
 
 
-def convert_l_t(R, G, B,n=256,p=256):
+def convert_l_t(R, G, B,n=5,p=5):
     R_p, G_p, B_p = R[:], G[:], B[:]
     image = []
     for j in range(p):
