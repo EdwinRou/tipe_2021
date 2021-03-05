@@ -72,7 +72,7 @@ B = cut(A[0])
 print('nombre d\'envoi pour la composante Rouge :\n', len(B))
 C = [encrypt(i) for i in B]
 print("Premier élément encrypté : \n", C[0])
-D = [decrypt(i) for i in tqdm(C)]
+D = [decrypt(i) for i in C]
 print("Premier élément décrypté :\n", D[0])
 D=liste_pleine(D)
 R = reverse_hexa(D)
