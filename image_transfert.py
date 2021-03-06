@@ -6,9 +6,8 @@ import time
 from tqdm import tqdm
 
 #im = img.imread('Oeil.jpg')
-im = img.imread('image.jpg')
-
-def convert(tab): #retourne une liste dimension, tab
+im = img.imread('picasso.jpg')
+def convert(tab): #retourne trois listes correspondant aux composantes RGB
     R,G,B = [],[],[]
     #D=[] #la transmission de la dimension de tab est mise sous le tapis
     #D.append(hexa(np.shape(tab)[0])), L.append(hexa(np.shape(tab)[1]))
@@ -60,26 +59,24 @@ def convert_l_t(R, G, B,n=5,p=5):
     R_p, G_p, B_p = R[:], G[:], B[:]
     image = []
     for j in range(p):
+        l = []
         for i in range(n):
-            image.append([R.pop(0),G.pop(0), B.pop(0)])
-    image.reshape(n,p)
+            l.append([R_p.pop(0),G_p.pop(0), B_p.pop(0)])
+        image.append(l)
+    image = np.array(image)
     return image
 
 
 A = convert(im)
-print("Les 9 premiers elements de la composante Rouge (hexa) : \n", A[0][:9])
-B = cut(A[0])
-print('nombre d\'envoi pour la composante Rouge :\n', len(B))
-C = [encrypt(i) for i in B]
-print("Premier élément encrypté : \n", C[0])
-D = [decrypt(i) for i in C]
-print("Premier élément décrypté :\n", D[0])
-D=liste_pleine(D)
-R = reverse_hexa(D)
-print(R[:9])
-print("nombre d\'éléments reçu :\n ",len(R))
-print(R[-9:])
-#G = convert_l_t(R,R,R)
+R,G,B = cut(A[0]), cut(A[1]), cut(A[2])
+R,G,B= [encrypt(i) for i in R],[encrypt(i) for i in G],[encrypt(i) for i in B]
+R,G,B = [decrypt(i) for i in tqdm(R)],[decrypt(i) for i in tqdm(G)],[decrypt(i) for i in tqdm(B)]
+R,G,B = liste_pleine(R),liste_pleine(G),liste_pleine(B)
+print(R[-150 :])
+print(G[-150:])
+print(B[-150:])
+R,G,B = reverse_hexa(R),reverse_hexa(G),reverse_hexa(B)
+print(len(R))
+#G = convert_l_t(R,G,B,)
 #plt.imshow(G)
 #plt.show()
-
