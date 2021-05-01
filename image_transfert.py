@@ -3,10 +3,10 @@ import random as rd
 import matplotlib.image as img
 import matplotlib.pyplot as plt
 import numpy as np
-# import time
 from tqdm import tqdm
 
-im = img.imread('image.jpg')
+im = img.imread('picasso.jpg')
+height, width, enc = im.shape
 
 def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour des nb<256
     if nombre > 255:
@@ -54,12 +54,12 @@ def reverse_hexa(L):
         Q.append(a*16+b)
     return Q
 
-def convert_l_t(R, G, B, n=5, p=5):
+def convert_l_t(R, G, B):
     R_p, G_p, B_p = R[:], G[:], B[:]
     image = []
-    for j in range(p):
+    for j in range(height):
         l = []
-        for i in range(n):
+        for i in range(width):
             l.append([R_p.pop(0),G_p.pop(0), B_p.pop(0)])
         image.append(l)
     image = np.array(image)
@@ -87,11 +87,22 @@ def erreur(l: list,r=16, n=3) -> list:
     return l
 
 def main():
-    # G = modification_tableau_rs(erreur, im)  # ne fait aucune modif
-    # G = modification_tableau(lambda liste: erreur(liste, 255), im)
-    G = modification_tableau(id_l, im)
-    plt.imshow(G)
-    plt.show()
+    #G = modification_tableau_rs(erreur, im)  # ne fait aucune modif
+    G = modification_tableau(lambda liste: erreur(liste, 255), im)
+    #G_n = modification_tableau(id_l, im)
+    fig = plt.figure()
 
+    fig.add_subplot(1,2,1)
+    plt.imshow(G)
+    plt.title("Sans Reed-Solomon")
+    plt.axis("off")
+
+    fig.add_subplot(1,2,2)
+    plt.imshow(im)
+    plt.title("Avec Reed-Solomon")
+    plt.axis("off")
+    
+    plt.tight_layout()
+    plt.show()
 
 main()
