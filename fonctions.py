@@ -111,14 +111,18 @@ for i in range(n - k):
 définition des fonctions qui opèrent sur les listes
 """
 
-def erreur(n,L): # retourne L avec au plus n erreurs aléatoirement distribuées
-    for i in range(n):
-        position=randint(0,len(L)-1)
-        erreur=randint(0,16)
-        L[position]=erreur
-    return L
 
-def sont_egale(L,M): # test l'égalité de deux listes
+def erreur_rs(liste: list, n=3) -> list: # retourne L avec au plus n erreurs aléatoirement distribuées
+    for t in range(n):
+        position: int = randint(0, len(liste) - 1)
+        erreur: int = randint(0,16)
+        liste[position] = erreur
+    return liste
+
+def id(l: list) -> list : # identité des listes
+    return l
+
+def sont_egale(L: list, M: list) -> bool: # test l'égalité de deux listes
     if len(M) != len(L):
         return False
     else:
