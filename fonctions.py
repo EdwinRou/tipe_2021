@@ -119,8 +119,12 @@ def erreur_rs(liste: list, n=3) -> list: # retourne L avec au plus n erreurs al�
         liste[position] = erreur
     return liste
 
-def id(l: list) -> list : # identité des listes
+def id_l(l: list) -> list : # identité des listes
     return l
+
+def id_n(n) -> list: # utile pour convert sans système hexa
+    return [n]
+
 
 def sont_egale(L: list, M: list) -> bool: # test l'égalité de deux listes
     if len(M) != len(L):

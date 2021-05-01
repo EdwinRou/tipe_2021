@@ -8,25 +8,22 @@ from tqdm import tqdm
 
 im = img.imread('image.jpg')
 
-
-def convert(tab):  # retourne trois listes correspondant aux composantes RGB
-    comp_r, comp_g, comp_b = [], [], []
-    # D=[] # la transmission de la dimension de tab est mise sous le tapis
-    # D.append(hexa(np.shape(tab)[0])), L.append(hexa(np.shape(tab)[1]))
-    for ligne_i in range(np.shape(tab)[0]):
-        for colonne_j in range(np.shape(tab)[1]):
-            for indice in hexa(tab[ligne_i, colonne_j, 0]):
-                comp_r.append(indice)
-            for indice in hexa(tab[ligne_i, colonne_j, 1]):
-                comp_g.append(indice)
-            for indice in hexa(tab[ligne_i, colonne_j, 2]):
-                comp_b.append(indice)
-    return comp_r, comp_g, comp_b
-
 def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour des nb<256
     if nombre > 255:
         raise ValueError
     return [nombre // 16, nombre % 16]
+
+def convert(tab, syst = hexa):  # retourne trois listes correspondant aux composantes RGB
+    comp_r, comp_g, comp_b = [], [], []
+    for ligne_i in range(np.shape(tab)[0]):
+        for colonne_j in range(np.shape(tab)[1]):
+            for indice in syst(tab[ligne_i, colonne_j, 0]):
+                comp_r.append(indice)
+            for indice in syst(tab[ligne_i, colonne_j, 1]):
+                comp_g.append(indice)
+            for indice in syst(tab[ligne_i, colonne_j, 2]):
+                comp_b.append(indice)
+    return comp_r, comp_g, comp_b
 
 def liste_pleine(liste: list) -> list:
     m = liste.copy()
@@ -78,20 +75,21 @@ def modification_tableau_rs(f, im): # applique aux pixel du tableau im la foncti
     return convert_l_t(R, G, B)
 
 def modification_tableau(f , im):
-    A = convert(im)
+    A = convert(im, id_n)
     R, G, B = cut(A[0]), cut(A[1]), cut(A[2])
     R, G, B = [f(i) for i in R], [f(i) for i in G], [f(i) for i in B]
     R, G, B = liste_pleine(R), liste_pleine(G), liste_pleine(B)
     return convert_l_t(R, G, B)
 
-def erreur(l: list, n=3) -> list:
+def erreur(l: list,r=16, n=3) -> list:
     for t in range(n):
-        l[t] = rd.randrange(0,16)
+        l[t] = rd.randrange(0,r)
     return l
 
 def main():
     # G = modification_tableau_rs(erreur, im)  # ne fait aucune modif
-    G = modification_tableau(erreur, im)
+    # G = modification_tableau(lambda liste: erreur(liste, 255), im)
+    G = modification_tableau(id_l, im)
     plt.imshow(G)
     plt.show()
 
