@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
-im = img.imread('/Images/picasso.jpg')
+im = img.imread('Images/tournesol.jpg')
 height, width, enc = im.shape
 
 def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour des nb<256
