@@ -11,12 +11,11 @@ le principe de ce TIPE est de maximiser la transmission de données dans un mili
 
 ---
 
-La construction de l'algorithme de Reed-Solomon s'appuie sur le module pyfinite pour la gestion du corps  <img src="https://render.githubusercontent.com/render/math?math=\mathbb{F}_{16}"> 
+La construction de l'algorithme de Reed-Solomon s'appuie sur le module pyfinite pour la gestion du corps  <img src="https://render.githubusercontent.com/render/math?math=\mathbb{F}_{16}">
 
 ---
 
 
 ## Reconstruction d'erreur avec Reed-Solomon
 
-<img src="https://github.com/GerfautGE/TIPE-RS/blob/main/Comparaison.png" height="500">
-
+<img src="https://github.com/GerfautGE/TIPE-RS/blob/main/Images/Comparaison.png" height="500">
