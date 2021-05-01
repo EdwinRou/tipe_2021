@@ -193,3 +193,6 @@ def decrypt_naif(L):
                 c[i]+=c.pop(j)
     imax = c.index(max(c))
     return D[imax]
+
+def pop_0(l: list) -> list:
+    l

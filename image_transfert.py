@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
-im = img.imread('Images/tournesol.jpg')
+im = img.imread('Images/picasso.jpg')
 height, width, enc = im.shape
 
 def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour des nb<256
@@ -56,11 +56,12 @@ def reverse_hexa(L):
 
 def convert_l_t(R, G, B):
     R_p, G_p, B_p = R[:], G[:], B[:]
+    R_p.reverse(), G_p.reverse(), B_p.reverse()
     image = []
     for j in range(height):
         l = []
         for i in range(width):
-            l.append([R_p.pop(0),G_p.pop(0), B_p.pop(0)])
+            l.append([R_p.pop(),G_p.pop(), B_p.pop()])
         image.append(l)
     image = np.array(image)
     return image
@@ -82,8 +83,10 @@ def modification_tableau(f , im):
     return convert_l_t(R, G, B)
 
 def erreur(l: list,r=16, n=3) -> list:
+    taille = len(l)
     for t in range(n):
-        l[t] = rd.randrange(0,r)
+        rdm = rd.randrange(0,taille)
+        l[rdm] = rd.randrange(0,r)
     return l
 
 def main():
@@ -106,3 +109,5 @@ def main():
     plt.show()
 
 main()
+
+### profiling with snakeviz
