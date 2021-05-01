@@ -2,7 +2,7 @@
 
 Projet de TIPE 2020-2021 sur le codage d'erreur
 
-projet entièrement codé en Python, qui s'appui sur différents algorithmes :
+projet entièrement codé en Python, qui s'appuie sur différents algorithmes :
   * Un codage naif
   * Un codage de Haming-7,4
   * Un codage de reed Solomon
