@@ -141,7 +141,7 @@ def encrypt(u):
 
 def decrypt(message):
     """
-    définition de M à partir du méssage reçu
+    définition de M à partir du message reçu
     """
     m = pfmat.GenericMatrix((n, l_0 + l_1 + 2), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
     for indice in range(1, n+1):

@@ -68,10 +68,10 @@ def convert_l_t(R, G, B, n=5, p=5):
     image = np.array(image)
     return image
 
-def modification_tableau_rs(f,im): # applique aux pixel du tableau im la fonction f
+def modification_tableau_rs(f, im): # applique aux pixel du tableau im la fonction f
     A = convert(im)
     R, G, B = cut(A[0]), cut(A[1]), cut(A[2])
-    R, G, B = f([encrypt(i) for i in R]), f([encrypt(i) for i in G]), f([encrypt(i) for i in B])
+    R, G, B = [f(encrypt(i)) for i in R], [f(encrypt(i)) for i in G], [f(encrypt(i)) for i in B]
     R, G, B = [decrypt(i) for i in tqdm(R)], [decrypt(i) for i in tqdm(G)], [decrypt(i) for i in tqdm(B)]
     R, G, B = liste_pleine(R), liste_pleine(G), liste_pleine(B)
     R, G, B = reverse_hexa(R), reverse_hexa(G), reverse_hexa(B)
@@ -79,20 +79,21 @@ def modification_tableau_rs(f,im): # applique aux pixel du tableau im la fonctio
 
 def modification_tableau(f , im):
     A = convert(im)
-    R, G, B = f(cut(A[0])), f(cut(A[1])), f(cut(A[2]))
+    R, G, B = cut(A[0]), cut(A[1]), cut(A[2])
+    R, G, B = [f(i) for i in R], [f(i) for i in G], [f(i) for i in B]
     R, G, B = liste_pleine(R), liste_pleine(G), liste_pleine(B)
     return convert_l_t(R, G, B)
 
 def erreur(l: list, n=3) -> list:
     for t in range(n):
-        l[t]=rd.randrange(0,16)
+        l[t] = rd.randrange(0,16)
     return l
 
 def main():
-
-    G = modification_tableau_rs(erreur, im)  # ne fait aucune modif
-    # G = modification_tableau(erreur, im)
+    # G = modification_tableau_rs(erreur, im)  # ne fait aucune modif
+    G = modification_tableau(erreur, im)
     plt.imshow(G)
     plt.show()
+
 
 main()
