@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
-im = img.imread('picasso.jpg')
+im = img.imread('/Images/picasso.jpg')
 height, width, enc = im.shape
 
 def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour des nb<256
@@ -101,7 +101,7 @@ def main():
     plt.imshow(im)
     plt.title("Avec Reed-Solomon")
     plt.axis("off")
-    
+
     plt.tight_layout()
     plt.show()
 
