@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
-im = img.imread('Images/picasso.jpg')
+im = img.imread('Images/joconde.jpg')
 height, width, enc = im.shape
 
 def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour des nb<256
@@ -90,7 +90,7 @@ def erreur(l: list,r=16, n=3) -> list:
     return l
 
 def main():
-    #G = modification_tableau_rs(erreur, im)  # ne fait aucune modif
+    #G_rs = modification_tableau_rs(erreur, im)
     G = modification_tableau(lambda liste: erreur(liste, 255), im)
     #G_n = modification_tableau(id_l, im)
     fig = plt.figure()
