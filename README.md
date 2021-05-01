@@ -9,4 +9,14 @@ projet entièrement codé en Python, qui s'appui sur différents algorithmes :
 
 le principe de ce TIPE est de maximiser la transmission de données dans un milieu qui subit des perturbations.
 
-![plot](https://github.com/GerfautGE/TIPE-RS/blob/main/Comparaison.png)
+---
+
+## 
+
+---
+
+
+## Reconstruction d'erreur avec Reed-Solomon
+
+<img src="https://github.com/GerfautGE/TIPE-RS/blob/main/Comparaison.png" height="500">
+
