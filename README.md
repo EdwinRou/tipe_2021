@@ -1,5 +1,9 @@
 # TIPE-RS
 
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
+
+---
+
 Projet de TIPE 2020-2021 sur le codage d'erreur
 
 projet entièrement codé en Python, qui s'appuie sur différents algorithmes :
