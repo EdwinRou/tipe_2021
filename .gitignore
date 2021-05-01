@@ -6,6 +6,9 @@
 *.exe
 *.o
 *.so
+*.pyc
+*.pyo
+*.lut.4
 
 # Packages #
 ############
@@ -35,3 +38,5 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+.idea
+
