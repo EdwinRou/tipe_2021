@@ -111,14 +111,6 @@ for i in range(n - k):
 définition des fonctions qui opèrent sur les listes
 """
 
-
-def erreur_rs(liste: list, n=3) -> list: # retourne L avec au plus n erreurs aléatoirement distribuées
-    for t in range(n):
-        position: int = randint(0, len(liste) - 1)
-        erreur: int = randint(0,16)
-        liste[position] = erreur
-    return liste
-
 def id_l(l: list) -> list : # identité des listes
     return l
 
@@ -193,6 +185,3 @@ def decrypt_naif(L):
                 c[i]+=c.pop(j)
     imax = c.index(max(c))
     return D[imax]
-
-def pop_0(l: list) -> list:
-    l
