@@ -5,9 +5,9 @@
 Projet de TIPE 2020-2021 sur le codage d'erreur
 
 projet entièrement codé en Python, qui s'appuie sur différents algorithmes :
-  * Un codage naif
-  * Un codage de Haming-7,4
-  * Un codage de reed Solomon
+  * Un code naif
+  * Un code de Haming-7,4
+  * Un code de Reed-Solomon
 
 le principe de ce TIPE est de maximiser la transmission de données dans un milieu qui subit des perturbations.
 
@@ -21,3 +21,11 @@ La construction de l'algorithme de Reed-Solomon s'appuie sur le module pyfinite 
 ## Reconstruction d'erreur avec Reed-Solomon sur une image
 
 <img src="https://github.com/GerfautGE/TIPE-RS/blob/main/Images/Comparaison.png" height="500">
+
+
+---
+
+
+## Complexité du décodage avec la méthode de Reed-Solomon par les Polynômes
+
+<img src="https://github.com/GerfautGE/TIPE-RS/blob/main/Images/Compléxité.png" height="500">
