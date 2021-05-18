@@ -3,6 +3,8 @@ import random as rd
 import matplotlib.image as img
 import matplotlib.pyplot as plt
 import numpy as np
+import decrypt_rs
+
 
 im = img.imread('Images/image.jpg')
 height, width, enc = im.shape
@@ -71,7 +73,7 @@ def modification_tableau_rs(f, im, w=width, h=height): # applique aux pixel du t
     R = map(f, [encrypt(i) for i in cut(A[0])])
     G = map(f, [encrypt(i) for i in cut(A[1])])
     B = map(f, [encrypt(i) for i in cut(A[2])])
-    R, G, B = [decrypt(i) for i in R], [decrypt(i) for i in G], [decrypt(i) for i in B]
+    R, G, B = [decrypt_rs.polynomes(i) for i in R], [decrypt_rs.polynomes(i) for i in G], [decrypt_rs.polynomes(i) for i in B]
     R, G, B = reverse_hexa(liste_pleine(R)), reverse_hexa(liste_pleine(G)), reverse_hexa(liste_pleine(B))
     return convert_l_t(R, G, B, w, h)
 
