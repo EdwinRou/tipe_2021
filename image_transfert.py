@@ -3,7 +3,6 @@ import random as rd
 import matplotlib.image as img
 import matplotlib.pyplot as plt
 import numpy as np
-from tqdm import tqdm
 
 im = img.imread('Images/image.jpg')
 height, width, enc = im.shape
