@@ -6,7 +6,7 @@ def encrypt_naif(l):
 
 
 def decrypt_naif(l):
-    assert len(l)%3 == 0
+    assert len(l) % 3 == 0
     d = []
     c = [1]*3  # nombre d'éléments en commun entre les trois parties du message
     for indice in range(3):

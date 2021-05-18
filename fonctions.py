@@ -145,10 +145,12 @@ def encrypt(u):
     c = G.LeftMulColumnVec(u)
     return c
 
+
 def erreur(l: list, r=16, n=3) -> list:
-    taille = len(l)
+    li = l.copy()
+    taille = len(li)
     for t in range(n):
-        rdm = rd.randrange(0,taille)
-        l[rdm] = rd.randrange(0,r)
-    return l
+        rdm = rd.randrange(0, taille)
+        li[rdm] = rd.randrange(0, r)
+    return li
 

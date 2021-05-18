@@ -4,8 +4,8 @@ from fonctions import *
 def syndrome(message):
     assert (n-k) % 2 == 0  # MDS
     s = H.LeftMulColumnVec(message)
-    if sont_egale(s, [0]*n-k):
-        return s
+    if sont_egale(s, [0]*(n-k)):
+        return message
     S = pfmat.GenericMatrix((l_1, l_1+1), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
     for i in range(l_1):
         ligne = []
@@ -28,12 +28,12 @@ def syndrome(message):
                 a = F.Divide(a, u[taille - i - 1, taille - i - 1])
                 b = [a] + b
     indice = []
-    for x in range(1,16):
-        Q1 = 0
-        for w in range(l_1+1):
-            Q1= F.Add(Q1, F.Multiply(b[w], puissance(x, l_1+1-w)))
-        if Q1 == 0:
-            indice.append(x)
+    for x in range(0,16):  # on test pour chaque élément du corps
+        evaluation_q1 = 0
+        for w in range(l_1+1):  # pour chaque monome
+            evaluation_q1 = F.Add(evaluation_q1, F.Multiply(b[w], puissance(x, l_1-w)))
+        if evaluation_q1 == 0:
+            indice.append(X.index(x))
 
     return indice, b
 
@@ -67,4 +67,4 @@ def polynomes(message):
             q = [a] + q
     q_1 = q[l_0 + 1:] # définition de Q1
     q_0 = q[:(len(q) - (l_1 + 1))] # définition de Q0
-    return diveu(q_0, q_1)[0] # le message initialement envoyé
+    return diveu(q_0, q_1)[0]  # le message initialement envoyé

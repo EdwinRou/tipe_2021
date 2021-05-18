@@ -86,13 +86,6 @@ def modification_tableau(f , im):
     return convert_l_t(R, G, B)
 
 
-def erreur(l: list,r=16, n=3) -> list:
-    taille = len(l)
-    for t in range(n):
-        rdm = rd.randrange(0,taille)
-        l[rdm] = rd.randrange(0,r)
-    return l
-
 
 def main():
     G_rs = modification_tableau_rs(erreur, im)

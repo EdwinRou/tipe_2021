@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from image_transfert import *
 import time
+from tqdm import tqdm
 
 
 def mesure_temps(n):
@@ -17,8 +18,7 @@ def mesure_temps(n):
 
 
 X0, Y0 = mesure_temps(100)
-print("X : ",X0,"Y :",  Y0)
-plt.plot(X0, Y0, label="Temps réel")
+plt.plot(X0, Y0, label="R-S Polynômes")
 # plt.plot(X0, [i for i in X0], label="x")
 plt.xlabel("Coté du tableau (Unités)")
 plt.ylabel("Temps d'execution (s)")
