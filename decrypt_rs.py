@@ -4,7 +4,7 @@ from fonctions import *
 def syndrome(message):
     assert (n-k) % 2 == 0  # MDS
     s = H.LeftMulColumnVec(message)
-    if sont_egale(s, [0 for i in range(n-k)]):
+    if sont_egale(s, [0]*n-k):
         return s
     S = pfmat.GenericMatrix((l_1, l_1+1), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
     for i in range(l_1):

@@ -1,20 +1,20 @@
 from fonctions import *
 
 
-def encrypt_naif(L):
-    return L*3 # principe des tiroirs
+def encrypt_naif(l):
+    return l*3  # principe des tiroirs
 
 
-def decrypt_naif(L):
-    n = len(L)
-    D = []
-    c = [1]*(3) # nombre d'éléments en commun entre les trois parties du message
-    for i in range(3):
-        D.append(L[k*i:k*(i+1)])# on découpe L en trois parties
-    for i in range(len(D)-2):
-        for j in range(i+1, len(D)-1):
-            if j<len(D) and sont_egale(D[i],D[j]):# on les compares deux à deux
-                D.pop(j)
-                c[i]+=c.pop(j)
+def decrypt_naif(l):
+    assert len(l)%3 == 0
+    d = []
+    c = [1]*3  # nombre d'éléments en commun entre les trois parties du message
+    for indice in range(3):
+        d.append(l[k * indice:k * (indice + 1)])  # on découpe l en trois parties
+    for ind_i in range(len(d)-2):
+        for ind_j in range(ind_i+1, len(d)-1):
+            if ind_j < len(d) and sont_egale(d[ind_i], d[ind_j]):  # on les compares deux à deux
+                d.pop(ind_j)
+                c[ind_i] += c.pop(ind_j)
     imax = c.index(max(c))
-    return D[imax]
+    return d[imax]
