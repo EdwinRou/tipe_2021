@@ -3,13 +3,8 @@ Import des bibliothèques relatives au coprs F16
 """
 import pyfinite.ffield as pffield
 import pyfinite.genericmatrix as pfmat
-import pyfinite.genericmatrix as mat
 import random as rd
 
-"""
-Import de random pour gérer aléatoirement les erreurs
-"""
-from random import randint
 
 """
 Définition des paramètres du cadre d'étude :
@@ -150,105 +145,10 @@ def encrypt(u):
     c = G.LeftMulColumnVec(u)
     return c
 
-
-def decrypt(message):
-    """
-    définition de M à partir du message reçu
-    """
-    m = pfmat.GenericMatrix((n, l_0 + l_1 + 2), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
-    for indice in range(1, n+1):
-        ligne = []
-        for j in range(l_0 + 1):
-            ligne.append(puissance(X[indice], j))
-        for k in range(l_1 + 1):
-            ligne.append(F.Multiply(message[indice-1], puissance(X[indice], k)))
-        m.SetRow(indice-1, ligne)
-    u = m.LUP()[1]  # décomposition en matrices triangulaires pour extraire un élément non trivial du noyau
-    """
-    récupération du noyau grâce au pivot de Gauss
-    """
-    q = [X[1]] # on fixe un élément pour obtenir un systeme de Cauchy
-    taille = l_0 + l_1 + 2
-    for i in range(1, taille):
-        a = 0
-        for j in range(1, len(q) + 1):
-            a = F.Add(a, F.Multiply(u[taille - i - 1, taille - j], q[-j]))
-        if a == 0:
-            q = [a] + q
-        else:
-            a = F.Divide(a, u[taille - i - 1, taille - i - 1])
-            q = [a] + q
-    q_1 = q[l_0 + 1:] # définition de Q1
-    q_0 = q[:(len(q) - (l_1 + 1))] # définition de Q0
-    return diveu(q_0, q_1)[0] # le message initialement envoyé
-
-
-def decrypt_syndrome(message):
-    assert (n-k) % 2 == 0  # MDS
-    s = H.LeftMulColumnVec(message)
-    if sont_egale(s, [0 for i in range(n-k)]):
-        return s
-    S = pfmat.GenericMatrix((l_1, l_1+1), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
-    for i in range(l_1):
-        ligne = []
-        for j in range(l_1+1):
-            ligne.append(s[i+j])
-        S.SetRow(i, ligne)
-        u = S.LUP()[1]  # décomposition en matrices triangulaires pour extraire un élément non trivial du noyau
-        """
-        récupération du noyau grâce au pivot de Gauss
-        """
-        b = [X[1]]  # on fixe un élément pour obtenir un systeme de Cauchy
-        taille = l_1 + 1
-        for i in range(1, taille):
-            a = 0
-            for j in range(1, len(b) + 1):
-                a = F.Add(a, F.Multiply(u[taille - i - 1, taille - j], b[-j]))
-            if a == 0:
-                b = [a] + b
-            else:
-                a = F.Divide(a, u[taille - i - 1, taille - i - 1])
-                b = [a] + b
-    indice = []
-    for x in range(1,16):
-        Q1 = 0
-        for w in range(l_1+1):
-            Q1= F.Add(Q1, F.Multiply(b[w], puissance(x, l_1+1-w)))
-        if Q1 == 0:
-            indice.append(x)
-
-    return indice, b
-
-
-def encrypt_naif(L):
-    return L*3 # principe des tiroirs
-
-
-def decrypt_naif(L):
-    n = len(L)
-    D = []
-    c = [1]*(3) # nombre d'éléments en commun entre les trois parties du message
-    for i in range(3):
-        D.append(L[k*i:k*(i+1)])# on découpe L en trois parties
-    for i in range(len(D)-2):
-        for j in range(i+1, len(D)-1):
-            if j<len(D) and sont_egale(D[i],D[j]):# on les compares deux à deux
-                D.pop(j)
-                c[i]+=c.pop(j)
-    imax = c.index(max(c))
-    return D[imax]
-
-
-def erreur(l: list,r=16, n=3) -> list:
+def erreur(l: list, r=16, n=3) -> list:
     taille = len(l)
     for t in range(n):
         rdm = rd.randrange(0,taille)
         l[rdm] = rd.randrange(0,r)
     return l
 
-
-U = encrypt([i for i in range(9)])
-V = erreur(U)
-print(decrypt_syndrome(V))
-print(V)
-print(G.LeftMulColumnVec([i for i in range(9)]))
