@@ -87,4 +87,4 @@ def polynomes(message):
             q = [a] + q
     q_1 = q[l_0 + 1:] # définition de Q1
     q_0 = q[:(len(q) - (l_1 + 1))] # définition de Q0
-    return diveu(q_0, q_1)[0]  # le message initialement envoyé
+    return div_euclid(q_0, q_1)[0]  # le message initialement envoyé

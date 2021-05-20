@@ -1,12 +1,11 @@
 from fonctions import *
-import random as rd
 import matplotlib.image as img
 import matplotlib.pyplot as plt
 import numpy as np
-import decrypt_rs
+import decode
 
 
-im = img.imread('Images/image.jpg')
+im = img.imread('Images/joconde.jpg')
 height, width, enc = im.shape
 
 
@@ -16,7 +15,7 @@ def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour
     return [nombre // 16, nombre % 16]
 
 
-def convert(tab, syst=hexa):  # retourne trois listes correspondant aux composantes RGB
+def convert_t_l(tab, syst=hexa):  # retourne trois listes correspondant aux composantes RGB
     comp_r, comp_g, comp_b = [], [], []
     for ligne_i in range(np.shape(tab)[0]):
         for colonne_j in range(np.shape(tab)[1]):
@@ -29,19 +28,19 @@ def convert(tab, syst=hexa):  # retourne trois listes correspondant aux composan
     return comp_r, comp_g, comp_b
 
 
-def liste_pleine(liste: list) -> list:
+def uncut(liste: list) -> list:
     m = liste.copy()
     if type(m[0]) != list:
         return m
     else:
-        res =[]
+        res = []
         for o in range(len(m)):
             for t in range(len(m[o])):
                 res.append(m[o][t])
-        return liste_pleine(res)
+        return uncut(res)
 
 
-def cut(liste, taille=9):  # décompose L en sous listes de taille q
+def cut(liste, taille=9):  # décompose l en sous listes de taille q
     taille_liste = len(liste)
     s = []
     for k in range(taille_liste // taille):
@@ -50,8 +49,8 @@ def cut(liste, taille=9):  # décompose L en sous listes de taille q
     return s
 
 
-def reverse_hexa(L):
-    S = L[:]
+def unhexa(l):
+    S = l[:]
     Q = []
     while len(S) > 1:
         a = S.pop(0)
@@ -69,36 +68,36 @@ def convert_l_t(R, G, B, w=width, h=height):
 
 
 def modification_tableau_rs(f, im, w=width, h=height): # applique aux pixel du tableau im la fonction f
-    A = convert(im)
-    R = map(f, [encrypt(i) for i in cut(A[0])])
-    G = map(f, [encrypt(i) for i in cut(A[1])])
-    B = map(f, [encrypt(i) for i in cut(A[2])])
-    R, G, B = [decrypt_rs.polynomes(i) for i in R], [decrypt_rs.polynomes(i) for i in G], [decrypt_rs.polynomes(i) for i in B]
-    R, G, B = reverse_hexa(liste_pleine(R)), reverse_hexa(liste_pleine(G)), reverse_hexa(liste_pleine(B))
+    A = convert_t_l(im)
+    R = map(f, [encode(i) for i in cut(A[0])])
+    G = map(f, [encode(i) for i in cut(A[1])])
+    B = map(f, [encode(i) for i in cut(A[2])])
+    R, G, B = [decode.polynomes(i) for i in R], [decode.polynomes(i) for i in G], [decode.polynomes(i) for i in B]
+    R, G, B = unhexa(uncut(R)), unhexa(uncut(G)), unhexa(uncut(B))
     return convert_l_t(R, G, B, w, h)
 
 
-def modification_tableau(f , im):
-    A = convert(im, id_n)
+def modification_tableau(f, image):
+    A = convert_t_l(im, id_n)
     R, G, B = cut(A[0]), cut(A[1]), cut(A[2])
     R, G, B = [f(i) for i in R], [f(i) for i in G], [f(i) for i in B]
-    R, G, B = liste_pleine(R), liste_pleine(G), liste_pleine(B)
-    return convert_l_t(R, G, B)
+    R, G, B = uncut(R), uncut(G), uncut(B)
+    return convert_l_t(R, G, B, width, height)
 
 
 
 def main():
-    G_rs = modification_tableau_rs(erreur, im)
+    #G_rs = modification_tableau_rs(erreur, im)
     G = modification_tableau(lambda liste: erreur(liste, 255), im)
     fig = plt.figure()
 
-    fig.add_subplot(1,2,1)
+    fig.add_subplot(1, 2, 1)
     plt.imshow(G)
     plt.title("Sans Reed-Solomon")
     plt.axis("off")
 
     fig.add_subplot(1,2,2)
-    plt.imshow(G_rs)
+    plt.imshow(im)
     plt.title("Avec Reed-Solomon")
     plt.axis("off")
 
@@ -108,3 +107,8 @@ def main():
 
 #main()
 
+G = modification_tableau(lambda liste: erreur(liste, 255, 2), im)
+plt.imshow(G)
+plt.title("Sans Reed-Solomon")
+plt.axis("off")
+plt.show()
