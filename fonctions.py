@@ -48,7 +48,7 @@ def simple(poly: list) -> list: # retire les 0 inutiles en tête du polynome
     return poly
 
 
-def diveu(poly_a: list, poly_b: list):  # division euclidienne de a par b
+def div_euclid(poly_a: list, poly_b: list):  # division euclidienne de a par b
     if deg(poly_b) == 0:  # On ne divise pas par 0 !
         return []
     elif deg(poly_b) > deg(poly_a):  # La division d'un polynome par un polynome de degré supérieur est nulle
@@ -141,7 +141,7 @@ Définition des fonctions de Reed-Solomon
 """
 
 
-def encrypt(u):
+def encode(u):
     c = G.LeftMulColumnVec(u)
     return c
 
