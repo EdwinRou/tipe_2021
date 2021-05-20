@@ -4,11 +4,9 @@
 
 Projet de TIPE 2020-2021 sur le codage d'erreur
 
-projet entièrement codé en Python, qui s'appuie sur différents algorithmes :
-  * Un code naif
-  * Un code de Reed-Solomon
-     * décodage avec la méthode des Polynomes 
-     * décodage avec la méthode des Syndromes
+projet entièrement codé en Python, qui s'appuie sur différentes méthodes
+  * décodage avec la méthode des Polynomes 
+  * décodage avec la méthode des Syndromes
      
 
 le principe de ce TIPE est de maximiser la transmission de données dans un milieu qui subit des perturbations.
