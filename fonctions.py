@@ -99,6 +99,15 @@ for i in range(1, n + 1):
         ligne.append(puissance(X[i], j))
     G.SetRow(i - 1, ligne)
 
+G_tronquee = pfmat.GenericMatrix((k, k), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
+for i in range(1, k + 1):
+    ligne = []
+    for j in range(0, k):
+        ligne.append(puissance(X[i], j))
+    G_tronquee.SetRow(i - 1, ligne)
+
+G_inverse = G_tronquee.Inverse()
+
 H = pfmat.GenericMatrix((n - k, n), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
 for i in range(n - k):
     ligne = []

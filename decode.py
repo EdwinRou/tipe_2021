@@ -29,34 +29,27 @@ def syndrome(message):
                 b = [a] + b
     indice = []
     b.reverse()
-    for x in range(0,16):  # on test pour chaque élément du corps
+    for i in range(0, 16):  # on test pour chaque élément non nul du corps
         evaluation_q1 = 0
         for l in range(l_1+1):  # pour chaque monome
             e = evaluation_q1
-            evaluation_q1 = F.Add(e, F.Multiply(b[l], puissance(x, l_1-l)))
+            evaluation_q1 = F.Add(e, F.Multiply(b[l], puissance(X[i], l_1-l)))
         if evaluation_q1 == 0:
-            indice.append(X.index(x)-1)
+            indice.append(i-1)
     t = len(indice)
-    S_ext = pfmat.GenericMatrix((t, t), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
-    for i in range(t):
+    H_ext = pfmat.GenericMatrix((t, t), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
+    for m in range(t):
         ligne = []
-        for j in range(t):
-            ligne.append(puissance(X[indice[j]], i+1))
-        S_ext.SetRow(i, ligne)
-        S_sol = [s[i] for i in range(t)]
-        I = S_sol
-        E = [0]*15
-        C = []
-        for i in range(16):
-            if i in indice:
-                E[i] = I[indice.index(i)]
-        for i in range(15):
-            if E[i] == 0:
-                C.append(message[i])
-            else:
-                C.append(F.Add(message[i], E[i]))
-    return S_ext,S_ext.Determinant()
-
+        for l in range(t):
+            ligne.append(puissance(X[indice[l]+1], m+1))
+        H_ext.SetRow(m, ligne)
+    S_sol = [s[i] for i in range(t)]
+    I = H_ext.Solve(S_sol)
+    E = [0]*15
+    for i in range(len(S_sol)):
+        E[indice[i]] = I[i]
+    C = [F.Add(message[i], E[i]) for i in range(15)]
+    return G_inverse.LeftMulColumnVec(C[:9])
 
 def polynomes(message):
     """
