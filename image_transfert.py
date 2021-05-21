@@ -67,7 +67,8 @@ def convert_l_t(R, G, B, w=width, h=height):
     return image
 
 
-def modification_tableau_rs(f, im, w=width, h=height, method = decode.polynomes): # applique aux pixel du tableau im la fonction f
+def modification_tableau_rs(f, im, w=width, h=height, method=decode.polynomes):  # applique aux pixel du tableau im la
+    # fonction f
     A = convert_t_l(im)
     R = map(f, [encode(i) for i in cut(A[0])])
     G = map(f, [encode(i) for i in cut(A[1])])
@@ -85,9 +86,8 @@ def modification_tableau(f, image):
     return convert_l_t(R, G, B, width, height)
 
 
-
 def main():
-    #G_rs = modification_tableau_rs(erreur, im)
+    # G_rs = modification_tableau_rs(erreur, im)
     G = modification_tableau(lambda liste: erreur(liste, 255), im)
     fig = plt.figure()
 
@@ -96,7 +96,7 @@ def main():
     plt.title("Sans Reed-Solomon")
     plt.axis("off")
 
-    fig.add_subplot(1,2,2)
+    fig.add_subplot(1, 2, 2)
     plt.imshow(im)
     plt.title("Avec Reed-Solomon")
     plt.axis("off")
@@ -105,4 +105,4 @@ def main():
     plt.show()
 
 
-#main()
+# main()

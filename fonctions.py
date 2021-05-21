@@ -39,7 +39,7 @@ def deg(polynome):  # retourn le degré du polynome
         # tous les coefficients sont nuls
 
 
-def simple(poly: list) -> list: # retire les 0 inutiles en tête du polynome
+def simple(poly: list) -> list:  # retire les 0 inutiles en tête du polynome
     while len(poly) > 1:  # Tant que le polynome n'est pas une constante
         if poly[-1] == 0:
             poly.pop()  # On le retire le terme de plus haut degré s'il est nul
@@ -127,21 +127,21 @@ définition des fonctions qui opèrent sur les listes
 """
 
 
-def id_l(l: list) -> list : # identité des listes
+def id_l(l: list) -> list:  # identité des listes
     return l
 
 
-def id_n(n) -> list: # utile pour convert sans système hexa
+def id_n(n) -> list:  # utile pour convert sans système hexa
     return [n]
 
 
-def sont_egale(L: list, M: list) -> bool: # test l'égalité de deux listes
+def sont_egale(L: list, M: list) -> bool:  # test l'égalité de deux listes
     if len(M) != len(L):
         return False
     else:
         for i in range(len(L)):
-             if L[i] != M[i]:
-                 return False
+            if L[i] != M[i]:
+                return False
     return True
 
 
@@ -162,4 +162,3 @@ def erreur(l: list, r=16, n=3) -> list:
         rdm = rd.randrange(0, taille)
         li[rdm] = rd.randrange(0, r)
     return li
-
