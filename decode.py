@@ -5,7 +5,7 @@ def syndrome(message):
     assert (n-k) % 2 == 0  # Condition pour fonctionnement optimal des syndromes
     s, b = H.LeftMulColumnVec(message), []
     if sont_egale(s, [0]*(n-k)):  # Si le Syndrome est nul (sans erreurs), on retourne le message
-        return message
+        return G_inverse.LeftMulColumnVec(message[:9])
     s_ext = pfmat.GenericMatrix((l_1, l_1+1), zeroElement=0, identityElement=1, add=adn, sub=adn, mul=multn, div=divn)
     for element in range(l_1):
         add_ligne = []
