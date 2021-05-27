@@ -87,7 +87,7 @@ def modification_tableau(f, image):
 
 
 def main():
-    # G_rs = modification_tableau_rs(erreur, im)
+    G_rs = modification_tableau_rs(erreur, im)
     G = modification_tableau(lambda liste: erreur(liste, 255), im)
     fig = plt.figure()
 
@@ -97,7 +97,7 @@ def main():
     plt.axis("off")
 
     fig.add_subplot(1, 2, 2)
-    plt.imshow(im)
+    plt.imshow(G_rs)
     plt.title("Avec Reed-Solomon")
     plt.axis("off")
 
@@ -105,4 +105,4 @@ def main():
     plt.show()
 
 
-# main()
+main()
