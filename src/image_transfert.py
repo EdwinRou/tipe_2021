@@ -5,11 +5,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 from . import decode
 import tqdm
+from multiprocessing import Pool
 
 im = img.imread('static/joconde.jpg')
 height, width, enc = im.shape
 
-def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour des nb<256
+def hexa(nombre: int) -> list:
+    """
+    décompose nombre en base 16
+
+    Args:
+        nombre (int): 0<=nombre<=255
+
+    Raises:
+        ValueError: si nombre n'est pas compris entre 0 et 255 
+
+    Returns:
+        list: couple de deux entiers représentant le nombre en base 16
+    """
     if nombre > 255:
         raise ValueError
     return [nombre // 16, nombre % 16]
@@ -70,9 +83,10 @@ def convert_l_t(R, G, B, w=width, h=height):
 def modification_tableau_rs(f, im, w=width, h=height, method=decode.polynomes):  # applique aux pixel du tableau im la
     # fonction f
     A = convert_t_l(im)
-    R = map(f, [encode(i) for i in cut(A[0])])
-    G = map(f, [encode(i) for i in cut(A[1])])
-    B = map(f, [encode(i) for i in cut(A[2])])
+    with Pool(4) as p:
+        R = p.imap(f, [encode(i) for i in cut(A[0])])
+        G = p.imap(f, [encode(i) for i in cut(A[1])])
+        B = p.imap(f, [encode(i) for i in cut(A[2])])
     R, G, B = [method(i) for i in R], [method(i) for i in G], [method(i) for i in B]
     R, G, B = unhexa(uncut(R)), unhexa(uncut(G)), unhexa(uncut(B))
     return convert_l_t(R, G, B, w, h)
