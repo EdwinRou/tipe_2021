@@ -1,0 +1,6 @@
+pyfinite
+time
+tqdm
+numpy
+random
+matplotlib
