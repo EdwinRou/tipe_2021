@@ -1,3 +1,4 @@
+import enum
 from .fonctions import *
 import matplotlib.image as img
 import matplotlib.pyplot as plt
@@ -33,9 +34,9 @@ def uncut(liste: list) -> list:
         return m
     else:
         res = []
-        for o in range(len(m)):
-            for t in range(len(m[o])):
-                res.append(m[o][t])
+        for o, num  in enumerate(m):
+            for t, num2 in enumerate(num):
+                res.append(num2)
         return uncut(res)
 
 
@@ -103,5 +104,3 @@ def main():
     plt.tight_layout()
     plt.show()
 
-
-main()

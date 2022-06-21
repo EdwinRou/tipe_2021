@@ -1,4 +1,5 @@
 #coding:utf-8
+from json import load
 import sys, os
 sys.path.append(os.path.realpath(os.path.dirname('src'))) # import src folder relative path
 from src.fonctions import k, G
