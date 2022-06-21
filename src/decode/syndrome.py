@@ -12,7 +12,6 @@ def syndrome(message: list)->list:
     Returns:
         list: message decoded
     """
-    assert len(message)== k
     assert (n-k) % 2 == 0  # Condition pour fonctionnement optimal des syndromes
     s, b = H.LeftMulColumnVec(message), []
     if sont_egale(s, [0]*(n-k)):  # Si le Syndrome est nul (sans erreurs), on retourne le message
