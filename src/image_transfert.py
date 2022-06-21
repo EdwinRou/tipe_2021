@@ -1,13 +1,12 @@
-from fonctions import *
+from .fonctions import *
 import matplotlib.image as img
 import matplotlib.pyplot as plt
 import numpy as np
-import decode
+from . import decode
+import tqdm
 
-
-im = img.imread('Images/joconde.jpg')
+im = img.imread('static/joconde.jpg')
 height, width, enc = im.shape
-
 
 def hexa(nombre: int) -> list:  # décomposition hexa de n sous forme [x,y] pour des nb<256
     if nombre > 255:
