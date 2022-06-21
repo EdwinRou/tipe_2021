@@ -18,13 +18,23 @@ class testFonctions(unittest.TestCase):
         A, B = [3, 8, 7, 3], [15, 2, 12]
         Q, R = div_euclid(A, B)
         c = []
-        for k in range(0, len(A)+len(B)):
+        for k in range(0, len(B)+len(Q)):
             S = 0
             for m in range(k):
-                S += F.Multiply(A[k-m], B[m])
+                if k-m < len(B) and m < len(Q):
+                    S += F.Multiply(B[k-m], Q[m])
+                else:
+                    S+= 0
             c.append(S)
-        A_p = map(lambda x, y: x+y, c, R)
-        self.assertEqual(sont_egale(A_p, A), True)
+        somme = lambda x, y: x+y
+        A_p = list(map(somme, c, R))
+        print("A : ", A)
+        print("B : ", B)
+        print("Q : ", Q)
+        print("R : ", R)
+        print("A_p : ", A_p)
+        
+        print(F.Multiply(15, 6), "x3+", F.Add(F.Multiply(15, 13), F.Multiply(6,2)), "x2+", F.Add(F.Multiply(2,13), F.Multiply(6,12)), "x+", F.Multiply(12,13))
         
         
 if __name__ == '__main__':

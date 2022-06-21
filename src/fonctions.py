@@ -67,7 +67,8 @@ def simple(poly: list) -> list:
     return poly
 
 
-def div_euclid(poly_a: list, poly_b: list):  # division euclidienne de a par b
+def div_euclid(Pa: list, Pb: list):  # division euclidienne de a par b
+    poly_a, poly_b = Pa.copy(), Pb.copy()
     if deg(poly_b) == 0:  # On ne divise pas par 0 !
         return []
     elif deg(poly_b) > deg(poly_a):  # La division d'un polynome par un polynome de degré supérieur est nulle
