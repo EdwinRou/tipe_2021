@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-from src.fonctions import pfmat, n, l_0, l_1, adn, multn, divn, puissance, X, F, div_euclid
+from src.fonctions import pfmat, n, l_0, l_1, adn, multn, divn, puissance, X, F, diveu
 
 def polynomes(message : list)->list:
     """decode message using polynomial method

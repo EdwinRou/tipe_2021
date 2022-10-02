@@ -43,10 +43,11 @@ def deg(polynome)->int:
     Returns:
         int: degré du polynome
     """
-    if simple(polynome) == [0]:
+    polynome = simple(polynome)
+    if polynome == [0]:
         return -1  # Si le polynome est le polynome nul, on pose que son degré est -1
     else:
-        return len(simple(polynome)) - 1  # Retourne la valeur de la puissance de X après laquelle
+        return len(polynome)-1  # Retourne la valeur de la puissance de X après laquelle
         # tous les coefficients sont nuls
 
 
@@ -66,29 +67,59 @@ def simple(poly: list) -> list:
             return poly
     return poly
 
+def add(X : list,Y : list) -> list:
+    assert len(X) != 0 and len(Y) != 0
+    X,Y = simple(X), simple(Y)
+    M, m = max(deg(X), deg(Y)), min(deg(X), deg(Y))
+    M+=1
+    m+=1
+    r =[F.Add(X[k], Y[k]) for k in range(m)]
+    if deg(X) < deg(Y): #ie deg(Y) is greater
+        return r + [Y[k] for k in range(m, deg(Y)+1)]
+    else:
+        return r + [X[k] for k in range(m, deg(X)+1)]
+        
+def multiply(X,Y):
+    X, Y = simple(X), simple(Y)
+    Somme = []
+    for s in range(deg(X)+deg(Y)+1):
+        monome = 0
+        for k in range(s+1):
+            try:
+                monome = F.Add(F.Multiply(X[k], Y[s-k]),monome)
+            except IndexError:
+                pass
+        Somme.append(monome)
+    return Somme
 
-def div_euclid(Pa: list, Pb: list):  # division euclidienne de a par b
+def diveu(Pa : list, Pb: list) -> list :
+    """
+    retourne la division euclidienne du polynome Pa par le polynome Pb
+
+    Args:
+        Pa (list): dividende
+        Pb (list): diviseur
+
+    Raises:
+        ZeroDivisionError: pas de division par 0
+
+    Returns:
+        list: Quotient,Reste
+    """
     poly_a, poly_b = Pa.copy(), Pb.copy()
-    if deg(poly_b) == 0:  # On ne divise pas par 0 !
-        return []
-    elif deg(poly_b) > deg(poly_a):  # La division d'un polynome par un polynome de degré supérieur est nulle
+    da, db = deg(poly_a), deg(poly_b)
+    if db == -1:  # On ne divise pas par 0 !
+        raise ZeroDivisionError
+    elif db > da:  # La division d'un polynome par un polynome de degré supérieur est nulle
         return [0], poly_a
     else:
-        b = [0] * (deg(poly_a) - deg(poly_b) + 1)  # Création du polynôme quotient dont
-        # le degré maximal est deg Pa - deg Pb
-        while deg(poly_a) >= deg(poly_b):  # Condition sur le reste dans la DE
-            coefficient = F.Divide(poly_a[-1], poly_b[-1])
-            c = [0] * (deg(poly_a) - deg(poly_b)) + simple(poly_b)
-            # Crée un polynôme égale à Pb multiplié par X à la puissance deg Pa - deg Pb
-            b[deg(poly_a) - deg(poly_b)] = coefficient  # Ajoute au quotient X à la puissance deg P - deg Q
-            for index in range(len(c)):
-                c[index] = F.Multiply(c[index], coefficient)
-            for index in range(len(poly_a)):
-                poly_a[index] = F.Add(poly_a[index], c[index])
-            simple(poly_a)
-        return simple(b), simple(poly_a)  # Simple b est le quotient tandis que #simple(poly_a) est le reste
-
-
+        Q = [0]
+        R = poly_a
+        while deg(R) >= deg(poly_b):
+            Q = add(Q,[0]*(deg(R)-deg(poly_b)) + [F.Divide(R[-1],poly_b[-1])])
+            R = add(R,multiply(Q,poly_b))
+        return(simple(Q),simple(R))
+            
 def adn(x, y):  # definition de la fonction addition pour le calcul matriciel
     return F.Add(x, y)
 
